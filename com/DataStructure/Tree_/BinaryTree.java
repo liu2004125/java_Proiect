@@ -21,12 +21,22 @@ public class BinaryTree {
 class TreeNode {
     private TreeNode lnode;
     private TreeNode rnode;
+    private TreeNode parent;
     private int data;
+
+    public TreeNode getParent() {
+        return parent;
+    }
+
+    public void setParent(TreeNode parent) {
+        this.parent = parent;
+    }
 
     public TreeNode(int data) {
         this.lnode = null;
         this.rnode = null;
         this.data = data;
+        this.parent=null;
     }
 
     public TreeNode getLnode() {
@@ -59,7 +69,44 @@ class Tree {
             add(value[i]);
         }
     }
+    private void balance(TreeNode cur){
+        //根据二叉树的性质，左节点<父结点<右结点，找到右结点的左结点适合代替被删除结点的位置
+        TreeNode template =cur.getParent();
+        TreeNode parent =cur.getRnode().getLnode();
+        parent.setParent(template);//template是祖先结点
+        //维护新属性
+        parent.setLnode(cur.getLnode());
+        parent.setRnode(cur.getRnode());
+        template.setLnode(parent);
+        //旧结点的父节点为新结点
+        cur.getRnode().setParent(parent);
+        cur.getLnode().setParent(parent);
+    }
 
+    public void remove(int data){
+        TreeNode template = rootnode;
+        while (true) {
+            if (data < template.getData()) {
+                //找到树的最左端
+                if (template.getLnode().getData() == data ) {
+                    TreeNode Lnode = template.getLnode();
+                    balance(Lnode);
+                    return;
+                } else {
+                    template = template.getLnode();
+                }
+            } else {
+                //找到树的最右端
+                if (template.getRnode() == null) {
+                    TreeNode Rnode = template.getLnode();
+                    balance(Rnode);
+                    return;
+                } else {
+                    template = template.getRnode();
+                }
+            }
+        }
+    }
     public void add(int data) {
         TreeNode template = rootnode;//临时结点，防止破坏根结点的指向
         if (rootnode == null) {
@@ -70,7 +117,9 @@ class Tree {
             if (data < template.getData()) {
                 //找到树的最左端
                 if (template.getLnode() == null) {
-                    template.setLnode(new TreeNode(data));
+                    TreeNode child= new TreeNode(data);
+                    template.setLnode(child);
+                    child.setParent(template);
                     return;
                 } else {
                     template = template.getLnode();
@@ -78,7 +127,9 @@ class Tree {
             } else {
                 //找到树的最右端
                 if (template.getRnode() == null) {
-                    template.setRnode(new TreeNode(data));
+                    TreeNode child= new TreeNode(data);
+                    template.setLnode(child);
+                    child.setParent(template);
                     return;
                 } else {
                     template = template.getRnode();

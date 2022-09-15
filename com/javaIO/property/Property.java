@@ -1,6 +1,6 @@
-package com.project;
+package com.javaIO.property;
 
-public class main {
+public class Property {
     public static void main(String[] args) {
 
     }

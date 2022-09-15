@@ -6,7 +6,7 @@ import java.util.List;
 
 public class listSort {
     public static void main(String[] args) {
-        List list = new ArrayList();
+        List<Book> list = new ArrayList<>();
         list.add(new Book("西游记", 10));
         list.add(new Book("西游", 100));
         list.add(new Book("记", 1));

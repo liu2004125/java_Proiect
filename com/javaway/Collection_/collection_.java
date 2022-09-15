@@ -2,6 +2,8 @@ package com.javaway.Collection_;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class collection_ {
@@ -16,6 +18,7 @@ public class collection_ {
         for (Object Dog : ary) {
             System.out.println(Dog);
         }
+        Queue<int[][]> s = new LinkedList<>();
 
         //迭代器
         Iterator iterator = ary.iterator();

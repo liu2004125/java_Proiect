@@ -5,9 +5,9 @@ public class Mergesort {
     public static void main(String[] args) {
         int[] num = new int[]{10, 2, 4, 3, 1, 8, 6, 7, 9, 5};
         int[] temp = new int[10];
-        mergeSort(num,0,9,temp);
+        mergeSort(num, 0, 9, temp);
         for (int i = 0; i < 10; i++) {
-            System.out.print(num[i]+" ");
+            System.out.print(num[i] + " ");
         }
     }
 
@@ -17,7 +17,20 @@ public class Mergesort {
             mergeSort(array, first, mid, temp); // 递归归并左边元素
             mergeSort(array, mid + 1, last, temp); // 递归归并右边元素
             //先分配好空间
-            mergeArray(array, first, mid, last, temp); // 再将二个有序数列合并
+            //mergeArray(array, first, mid, last, temp); // 再将二个有序数列合并
+            int i = first, j = mid + 1, k = 0;
+            while (i <= mid && j <= last) {
+                if (array[i] <= array[j]) {
+                    temp[k++] = array[i++];
+                } else {
+                    temp[k++] = array[j++];
+                }
+            }
+            while (i <= mid) temp[k++] = array[i++];
+            while (j <= last) temp[k++] = array[j++];
+
+            for (i = 0, j = first; j <= last; i++, j++) array[j] = temp[i];
+
         }
     }
 

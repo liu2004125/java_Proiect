@@ -19,16 +19,17 @@ public class dfs2 {
 //        S.numIslands()
     }
 }
+
 class Solution {
 
     public int numIslands(char[][] grid) {
-        int r=grid.length;
-        int c=grid[0].length;
-        int sum=0;
+        int r = grid.length;
+        int c = grid[0].length;
+        int sum = 0;
         int[][] flag = new int[r][c];//标记是否遍历
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(grid[i][j]=='1' && flag[i][j]!=-1) {
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (grid[i][j] == '1' && flag[i][j] != -1) {
                     dfs(grid, flag, i, j);
                     sum++; //找到岛屿点
                 }
@@ -36,29 +37,34 @@ class Solution {
         }
         return sum;
     }
-    public void dfs(char[][] grid,int[][] flag,int i,int j){
-        flag[i][j]=-1;
-        if(left(grid,flag,i,j)) dfs(grid,flag,i,j-1);
-        if(up(grid,flag,i,j)) dfs(grid,flag,i-1,j);
-        if(right(grid,flag,i,j)) dfs(grid,flag,i,j+1);
-        if(down(grid,flag,i,j)) dfs(grid,flag,i+1,j);
+
+    public void dfs(char[][] grid, int[][] flag, int i, int j) {
+        flag[i][j] = -1;
+        if (left(grid, flag, i, j)) dfs(grid, flag, i, j - 1);
+        if (up(grid, flag, i, j)) dfs(grid, flag, i - 1, j);
+        if (right(grid, flag, i, j)) dfs(grid, flag, i, j + 1);
+        if (down(grid, flag, i, j)) dfs(grid, flag, i + 1, j);
     }
-    public  boolean left(char[][] grid,int[][] flag,int i,int j){
-        if(j-1<0 || flag[i][j-1]==-1 || grid[i][j-1]=='0') return false;
+
+    public boolean left(char[][] grid, int[][] flag, int i, int j) {
+        if (j - 1 < 0 || flag[i][j - 1] == -1 || grid[i][j - 1] == '0') return false;
         return true;
     }
-    public boolean up(char[][] grid,int[][] flag,int i,int j){
-        if(i-1<0 || flag[i-1][j]==-1 || grid[i-1][j]=='0') return false;
+
+    public boolean up(char[][] grid, int[][] flag, int i, int j) {
+        if (i - 1 < 0 || flag[i - 1][j] == -1 || grid[i - 1][j] == '0') return false;
         return true;
     }
-    public boolean right(char[][] grid,int[][] flag,int i,int j){
-        if(j+1>=grid[0].length || flag[i][j-1]==-1
-                || grid[i][j+1]=='0') return false;
+
+    public boolean right(char[][] grid, int[][] flag, int i, int j) {
+        if (j + 1 >= grid[0].length || flag[i][j - 1] == -1
+                || grid[i][j + 1] == '0') return false;
         return true;
     }
-    public boolean down(char[][] grid,int[][] flag,int i,int j){
-        if(i+1>=grid.length || flag[i+1][j]==-1
-                || grid[i+1][j]=='0') return false;
+
+    public boolean down(char[][] grid, int[][] flag, int i, int j) {
+        if (i + 1 >= grid.length || flag[i + 1][j] == -1
+                || grid[i + 1][j] == '0') return false;
         return true;
     }
 }

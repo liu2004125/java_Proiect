@@ -6,15 +6,16 @@ import java.util.Scanner;
 public class qiucksort {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        ArrayList<Integer> num = new ArrayList<>();
-        while (in.hasNextInt()) {
-            num.add(in.nextInt());
-           String s = in.next();
-        }
-      //  int[] num = new int[]{10,2,4,3,1,8,6,7,9,5};
-        quicksort(num, 0, num.size() - 1);
-        for (int i = 0; i < num.size(); i++)
-            System.out.print(num.get(i));
+//        ArrayList<Integer> num = new ArrayList<>();
+//        while (in.hasNextInt()) {
+//            num.add(in.nextInt());
+//           String s = in.next();
+//        }
+        int[] num_1 = new int[]{2, 3, 1, 5, 4};
+        // quicksort(num, 0, num.size() - 1);
+        quicksort_1(num_1, 0, num_1.length - 1);
+        for (int i = 0; i < num_1.length; i++)
+            System.out.print(num_1[i]);
     }
 
     public static void quicksort(ArrayList num, int left, int right) {
@@ -35,4 +36,24 @@ public class qiucksort {
         quicksort(num, left, i);
         quicksort(num, i + 1, right);
     }
+
+    public static void quicksort_1(int[] a, int l, int r) {
+        if (l >= r) return;
+        //取中间值作为哨兵
+        int x = a[(l + r) / 2], i = l - 1, j = r + 1;
+        while (i < j) {
+            do i++; while (a[i] < x);
+            do j--; while (a[j] > x);
+            if (i < j) {
+                int t = a[i];
+                a[i] = a[j];
+                a[j] = t;
+            }
+        }
+
+        quicksort_1(a, l, j);
+        quicksort_1(a, j + 1, r);
+    }
 }
+
+

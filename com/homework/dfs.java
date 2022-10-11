@@ -14,7 +14,7 @@ package com.homework;
 public class dfs {
 
     public static void main(String[] args) {
-        int[][] image = new int[][]{{0,0,0}, {0,0,0}};
+        int[][] image = new int[][]{{0, 0, 0}, {0, 0, 0}};
         int sr = 0;
         int sc = 0;
         int color = 0;
@@ -31,36 +31,37 @@ public class dfs {
 
 class sloution {
     int news;
+
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
         news = color;
         int clo = image[sr][sc];//记录初始颜色
         image[sr][sc] = news;
         int[][] flag = new int[image.length][image[0].length];//标记点是否已经遍历
-        dfs(image, sr, sc, clo,flag);
+        dfs(image, sr, sc, clo, flag);
         return image;
     }
 
-    public void dfs(int[][] image, int sr, int sc, int start,int[][] flag) {
-        flag[sr][sc]=-1;
+    public void dfs(int[][] image, int sr, int sc, int start, int[][] flag) {
+        flag[sr][sc] = -1;
         int up = up(image, sr, sc);
         int down = down(image, sr, sc);
         int right = right(image, sr, sc);
         int left = left(image, sr, sc);
-        if (left != -1 && left == start && flag[sr][sc-1]!=-1) {
+        if (left != -1 && left == start && flag[sr][sc - 1] != -1) {
             image[sr][sc - 1] = news;
-            dfs(image, sr, sc - 1, start,flag);
+            dfs(image, sr, sc - 1, start, flag);
         }
-        if (down != -1 && down == start && flag[sr+1][sc]!=-1) {
+        if (down != -1 && down == start && flag[sr + 1][sc] != -1) {
             image[sr + 1][sc] = news;
-            dfs(image, sr + 1, sc, start,flag);
+            dfs(image, sr + 1, sc, start, flag);
         }
-        if (right != -1 && right == start && flag[sr][sc+1]!=-1) {
+        if (right != -1 && right == start && flag[sr][sc + 1] != -1) {
             image[sr][sc + 1] = news;
-            dfs(image, sr, sc + 1, start,flag);
+            dfs(image, sr, sc + 1, start, flag);
         }
-        if (up != -1 && up == start && flag[sr-1][sc]!=-1) {
+        if (up != -1 && up == start && flag[sr - 1][sc] != -1) {
             image[sr - 1][sc] = news;
-            dfs(image, sr - 1, sc, start,flag);
+            dfs(image, sr - 1, sc, start, flag);
         }
 
     }

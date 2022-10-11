@@ -1,42 +1,38 @@
 package com.DataStructure.Tree_;
 
-import java.util.Scanner;
-
 public class BinaryTree {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("input arrary'size (int) please");
-        int n = in.nextInt();
-        int[] data = new int[n];
-        System.out.println("please input data");
-        for (int i = 0; i < n; i++) {
-            data[i] = in.nextInt();
-        }
+        int[] data = new int[]{23, 4, 78, 101, 11, 22, 54, 67, 55, 94};
         Tree tree = new Tree(data);
+        System.out.println("树的前序");
         tree.Preorder(tree.rootnode);
-
+        System.out.println();
+        System.out.println("树的中序遍历");
+        tree.Inorder(tree.rootnode);
+        System.out.println();
+        System.out.println("树的后序遍历");
+        tree.Lastorder(tree.rootnode);
+        System.out.println();
+        System.out.println("删除67");
+        tree.remove(7);
+        System.out.println("前序输出");
+        tree.Preorder(tree.rootnode);
+        System.out.println();
+        System.out.println("插入8");
+        tree.add(8);
+        System.out.println("前序输出");
+        tree.Preorder(tree.rootnode);
     }
 }
 
-class TreeNode {
-    private TreeNode lnode;
-    private TreeNode rnode;
-    private TreeNode parent;
-    private int data;
-
-    public TreeNode getParent() {
-        return parent;
-    }
-
-    public void setParent(TreeNode parent) {
-        this.parent = parent;
-    }
+class TreeNode { // 结点的结构
+    private TreeNode lnode, rnode;//z左右孩子指针
+    private int data;//数据
 
     public TreeNode(int data) {
         this.lnode = null;
         this.rnode = null;
         this.data = data;
-        this.parent=null;
     }
 
     public TreeNode getLnode() {
@@ -59,6 +55,9 @@ class TreeNode {
         return data;
     }
 
+    public void setData(int data) {
+        this.data = data;
+    }
 }
 
 class Tree {
@@ -69,67 +68,112 @@ class Tree {
             add(value[i]);
         }
     }
-    private void balance(TreeNode cur){
-        //根据二叉树的性质，左节点<父结点<右结点，找到右结点的左结点适合代替被删除结点的位置
-        TreeNode template =cur.getParent();
-        TreeNode parent =cur.getRnode().getLnode();
-        parent.setParent(template);//template是祖先结点
-        //维护新属性
-        parent.setLnode(cur.getLnode());
-        parent.setRnode(cur.getRnode());
-        template.setLnode(parent);
-        //旧结点的父节点为新结点
-        cur.getRnode().setParent(parent);
-        cur.getLnode().setParent(parent);
+
+    private void balanceL(TreeNode cur, TreeNode pre) {//平衡由父节点的左孩子
+        //找到左子树的最右结点替换它（左子树的最大结点）
+        TreeNode parent = cur;
+        TreeNode temp = cur;
+        if (cur.getRnode() == null) {//如果操作结点没有右子树
+            pre.setLnode(cur.getLnode());//将父节点接入操作结点的左子树
+        } else if (cur.getLnode() == null) {//如果操作结点没有左子树
+            pre.setLnode(cur.getRnode());//同理
+        } else {//左右子树皆存在
+            temp = cur.getLnode();//临时结点为左孩子
+            while (temp.getRnode() != null) {//如果有右孩子
+                parent = temp;//保存前驱结点
+                temp = temp.getRnode();//向右前进
+            }
+            //直到最右端的结点
+            cur.setData(temp.getData());
+            if (parent == cur)
+                parent.setLnode(temp.getLnode());
+            else//使得被替换的结点为空，将其前驱结点指向null
+                parent.setRnode(temp.getLnode());
+        }
     }
 
-    public void remove(int data){
+    private void balanceR(TreeNode cur, TreeNode pre) {
+        //找到右子树的最左结点替换它（右子树的最小结点）
+        TreeNode parent = cur;
+        TreeNode temp = cur;
+        if (cur.getRnode() == null) {
+            pre.setRnode(cur.getLnode());
+        } else if (cur.getLnode() == null) {
+            pre.setRnode(cur.getRnode());
+        } else {
+            temp = cur.getLnode();//临时结点为左孩子
+            while (temp.getRnode() != null) {//如果有右孩子
+                parent = temp;//保存前驱结点
+                temp = temp.getRnode();//向右前进
+            }
+            //直到最右端的结点
+            cur.setData(temp.getData());
+            if (parent == cur)
+                parent.setLnode(temp.getLnode());
+            else//使得被替换的结点为空，将其前驱结点指向null
+                parent.setRnode(temp.getLnode());
+        }
+    }
+
+    public void remove_book(int data) {
+
+    }
+
+    public void remove(int data) {
         TreeNode template = rootnode;
+        TreeNode pre = rootnode;
         while (true) {
             if (data < template.getData()) {
-                //找到树的最左端
-                if (template.getLnode().getData() == data ) {
-                    TreeNode Lnode = template.getLnode();
-                    balance(Lnode);
+                //找到树的左端
+                if (template.getLnode() == null) {
+                    System.out.println("查无此数");
+                    return;
+                } else if (template.getLnode().getData() == data) {//如果匹配
+                    TreeNode Lnode = template.getLnode();//Lnode是需要修改的结点，template是其父节点
+                    balanceL(Lnode, template);//属性维护操作
                     return;
                 } else {
-                    template = template.getLnode();
+                    pre = template;//保留前驱
+                    template = template.getLnode();//向左走
                 }
             } else {
                 //找到树的最右端
                 if (template.getRnode() == null) {
-                    TreeNode Rnode = template.getLnode();
-                    balance(Rnode);
+                    System.out.println("查无此数");
+                    return;
+                } else if (template.getRnode().getData() == data) {//与左结点同理
+                    TreeNode Rnode = template.getRnode();
+                    balanceR(Rnode, template);
                     return;
                 } else {
+                    pre = template;
                     template = template.getRnode();
                 }
             }
         }
     }
+
     public void add(int data) {
         TreeNode template = rootnode;//临时结点，防止破坏根结点的指向
-        if (rootnode == null) {
+        if (rootnode == null) {//第一个结点则建立树根
             rootnode = new TreeNode(data);
             return;
         }
         while (true) {
-            if (data < template.getData()) {
-                //找到树的最左端
+            if (data < template.getData()) {//比父节点小，放左边
+                //找到树的左端
                 if (template.getLnode() == null) {
-                    TreeNode child= new TreeNode(data);
+                    TreeNode child = new TreeNode(data);
                     template.setLnode(child);
-                    child.setParent(template);
                     return;
                 } else {
                     template = template.getLnode();
                 }
             } else {
-                //找到树的最右端
+                //找到树的右端
                 if (template.getRnode() == null) {
-                    TreeNode child= new TreeNode(data);
-                    template.setLnode(child);
-                    child.setParent(template);
+                    TreeNode child = new TreeNode(data);
+                    template.setRnode(child);
                     return;
                 } else {
                     template = template.getRnode();
@@ -139,27 +183,27 @@ class Tree {
     }
 
     public void Preorder(TreeNode node) {//前序遍历
-        if (node != null) {
-            System.out.println(node.getData() + ",");
-            Preorder(node.getLnode());
-            Preorder(node.getRnode());
-        }
+        if (node == null) return;
+        System.out.print(node.getData() + ",");
+        Preorder(node.getLnode());
+        Preorder(node.getRnode());
+
     }
 
     public void Inorder(TreeNode node) {//中序遍历
-        if (node != null) {
-            Inorder(node.getLnode());
-            System.out.println(node.getData() + ",");
-            Inorder(node.getRnode());
-        }
+        if (node == null) return;
+        Inorder(node.getLnode());
+        System.out.print(node.getData() + ",");
+        Inorder(node.getRnode());
+
     }
 
     public void Lastorder(TreeNode node) {//后序遍历
-        if (node != null) {
-            Lastorder(node.getLnode());
-            Lastorder(node.getRnode());
-            System.out.println(node.getData() + ",");
-        }
+        if (node == null)
+            return;
+        Lastorder(node.getLnode());
+        Lastorder(node.getRnode());
+        System.out.print(node.getData() + ",");
     }
 }
 

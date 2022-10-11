@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class secarh {
-    public static void main(String[] args) throws ClassNotFoundException{
+    public static void main(String[] args) throws ClassNotFoundException {
         //加载并初始化指定的类reflect
         Class classInfo = Class.forName("com.reflection.cat");
         Constructor[] con = classInfo.getConstructors();//构造器
@@ -19,17 +19,24 @@ public class secarh {
 
     }
 }
-class cat{
+
+class cat {
     public String name = "steve";
     public int age = 1;
-    public String sex="male";
+    public String sex = "male";
 
     public cat(String name, int age, String sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
     }
-    public cat() {}
-    public void funtion(int i,String way){}
-    public void growth(){}
+
+    public cat() {
+    }
+
+    public void funtion(int i, String way) {
+    }
+
+    public void growth() {
+    }
 }

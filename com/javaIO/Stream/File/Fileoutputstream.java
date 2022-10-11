@@ -11,10 +11,10 @@ public class Fileoutputstream {
     }
 
     @Test
-    public void output1(){
-        FileOutputStream out  = null;
+    public void output1() {
+        FileOutputStream out = null;
         try {
-            out = new FileOutputStream("E:\\hello.txt",true);//append为true是追加填写，默认是覆写
+            out = new FileOutputStream("E:\\hello.txt", true);//append为true是追加填写，默认是覆写
             String str = "我是";
             out.write(str.getBytes());//转化为byte[]，读入
         } catch (IOException e) {

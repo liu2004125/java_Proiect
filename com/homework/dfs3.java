@@ -15,35 +15,37 @@ package com.homework;
 //        著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 public class dfs3 {
     public static void main(String[] args) {
-        int[][] grid = new int[][]{{0,0,1,0,0,0,0,1,0,0,0,0,0},
-                {0,0,0,0,0,0,0,1,1,1,0,0,0},{0,1,1,0,1,0,0,0,0,0,0,0,0},
-                {0,1,0,0,1,1,0,0,1,0,1,0,0},{0,1,0,0,1,1,0,0,1,1,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0},{0,0,0,0,0,0,0,1,1,1,0,0,0},
-                {0,0,0,0,0,0,0,1,1,0,0,0,0}};
+        int[][] grid = new int[][]{{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
         sol s = new sol();
         int res = s.maxAreaOfIsland(grid);
         System.out.println(res);
     }
 
 }
+
 class sol {
     public int maxAreaOfIsland(int[][] grid) {
-        int r=grid.length;
-        int c=grid[0].length;
-        island max =new island(0);
+        int r = grid.length;
+        int c = grid[0].length;
+        island max = new island(0);
         int[][] flag = new int[r][c];
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(grid[i][j]==1 && flag[i][j]!=-1){
-                    island s1=new island(0);
-                    s1.num=s1.dfs(grid,flag,i,j,0);
-                    if(s1.num>max.num) max.num=s1.num;
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (grid[i][j] == 1 && flag[i][j] != -1) {
+                    island s1 = new island(0);
+                    s1.num = s1.dfs(grid, flag, i, j, 0);
+                    if (s1.num > max.num) max.num = s1.num;
                 }//找到岛屿点
 
             }
         }
         return max.num;
     }
+
     class island {
         int num;
 

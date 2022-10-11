@@ -21,13 +21,7 @@ public class HafumanTree {
     }
 }
 
-class node1 implements Comparable<node1>{
-    @Override
-    public int compareTo(node1 o) {
-       // return o.getData()-this.getData();//降序
-        return this.getData()-o.getData();//升序
-    }
-
+class node1 implements Comparable<node1> {
     private int data;
     private node1 lch, rch;
 
@@ -35,6 +29,12 @@ class node1 implements Comparable<node1>{
         this.data = data;
         this.lch = null;
         this.rch = null;
+    }
+
+    @Override
+    public int compareTo(node1 o) {
+        // return o.getData()-this.getData();//降序
+        return this.getData() - o.getData();//升序
     }
 
     public int getData() {
@@ -67,11 +67,12 @@ class hafuman {
 
     node1 lnode, rnode;
     List<node1> nodeList = new ArrayList<>();
-    public void insert(int data ){
+
+    public void insert(int data) {
         nodeList.add(new node1(data));
     }
 
-    public void print(){
+    public void print() {
         for (int i = 0; i < nodeList.size(); i++) {
             System.out.println(nodeList.get(i).getLch().getData());
             System.out.println(nodeList.get(i).getRch().getData());
@@ -90,7 +91,7 @@ class hafuman {
             rnode = nodeList.get(1);
 
             // 将权重+路径和赋值给父节点，将父节点的左右节点挂上
-            node1 pnode = new node1(lnode.getData()+rnode.getData());
+            node1 pnode = new node1(lnode.getData() + rnode.getData());
             pnode.setLch(lnode);
             pnode.setRch(rnode);
 

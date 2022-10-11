@@ -12,6 +12,7 @@ public class Maptraverse {
         map.put("weihao", 100);
         map.put("hao", 100);
 
+        //通过键的遍历
         Set<String> KeySet = map.keySet();
         for (String Key : KeySet) {
             System.out.println(Key + "+" + map.get(Key));

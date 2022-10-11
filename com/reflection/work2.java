@@ -9,9 +9,9 @@ import java.lang.reflect.Method;
 public class work2 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String path = "java.io.File";
-        Class info =  Class.forName(path);
+        Class info = Class.forName(path);
         Constructor[] con = info.getDeclaredConstructors();
-        for(Constructor i: con){
+        for (Constructor i : con) {
             System.out.println(i);
         }
 

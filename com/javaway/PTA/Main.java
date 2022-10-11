@@ -4,6 +4,10 @@ public class Main {
     public static void main(String[] args) {
         //  Scanner in = new Scanner(System.in);
         int[] nums = {3, 5};
+        String s = "123231";
+        int i = Integer.parseInt(s);
+        Character r = 's';
+        r.isLetterOrDigit('s');
         System.out.println(isPalindrome("rac a car"));
     }
 

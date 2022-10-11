@@ -3,6 +3,7 @@ package com.DataStructure.queue_;
 import java.util.Scanner;
 
 public class deque_linklist {//双端队列
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Deque1 deque = new Deque1();

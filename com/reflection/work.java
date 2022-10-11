@@ -11,13 +11,13 @@ public class work {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException,
             InvocationTargetException, InstantiationException {
 
-        Class<privateTest> info=privateTest.class;
+        Class<privateTest> info = privateTest.class;
         Constructor<privateTest> con = info.getConstructor();
 
         privateTest t = con.newInstance();//实例对象
-        Field f=info.getDeclaredField("name");
+        Field f = info.getDeclaredField("name");
         f.setAccessible(true);
-        f.set(t,"liu");//属性对象,t是实例对象
+        f.set(t, "liu");//属性对象,t是实例对象
 
         Method med = info.getMethod("getName");
         Object invoke = med.invoke(t);//实例对象
@@ -26,10 +26,14 @@ public class work {
     }
 
 }
-class privateTest{
+
+class privateTest {
     private String name = "weihao";
+
+    public privateTest() {
+    }
+
     public String getName() {
         return name;
     }
-    public privateTest(){}
 }
